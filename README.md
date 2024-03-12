@@ -1,7 +1,8 @@
-
+# prsMacro
+Automation of tabulation of selected pgs entries and selected 23andme public files. Live at https://episphere.github.io/prsMacro !
 
 # PRScalc
-Calculation polygenic risk for individual 23andme mutation reports using PGS catalog. Live at https://episphere.github.io/prs !
+Calculation polygenic risk for individual 23andme mutation reports using PGS catalog. 
 
 # About info
  The PRS calculator relies solely on published/validated/open-source risk scores from the PGS catalog, whereas consumer genomics companies use proprietary algorithms that cannot be readily reproduced by others. Additionally, we observed that the inherent reusability of this design led to the use of the PRS calculator as a research tool to compare different PGS catalog entries, by reviewing the in-browser SNPedia and dbSNP analysis.
