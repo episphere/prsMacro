@@ -486,6 +486,16 @@ pgs.dtFrame2Array=(fields,values)=>{
     // under development
 }
 
+pgs.runMacro=function(){
+    console.log(`run macro at ${Date()}`)
+}
+pgs.prepareMacro=function(){
+    runMacroTabulation.onclick=pgs.runMacro
+}
+pgs.prepareMacro()
+
+
+
 pgs.ini=()=>{ // act on context, such as search parameters. Not called automatically here.
     pgs.parms={}
     if(location.search.length>3){
