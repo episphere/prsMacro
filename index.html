@@ -9,14 +9,20 @@ PRS <sub style="font-size:large">macro</sub><sup style="font-size:medium">
     [<img style = "vertical-align:bottom" src="youtube_img.png" class="Lgo" width="25" height="25" alt="playbutton">
     <a href="https://youtu.be/YXJjEZxHJhM" target="_blank">tutorial</a>]</sup>
 <br><span style="font-size:medium;color:navy;font-weight:normal">Individual polygenic risk score calculation (<a href="https://www.nature.com/articles/nrg.2016.27" target="_blank">PRS</a>) for 23andme reports, using the <a href='https://www.pgscatalog.org' target="_blank">PGS Catalog</a>.</span>
-<br><span style="font-size:medium;color:maroon;font-weight:bold">This version of the <a href="https://episphere.github.io/prs" target="_blank">prsCalculator</a> will automate calling individual PGS catalog entries and individual 23andme files made public by he personal genome project. </span>
+<br><span style="font-size:medium;color:maroon;font-weight:bold">This version of the <a href="https://episphere.github.io/prs" target="_blank">prsCalculator</a> will automate calling individual PGS catalog entries and individual 23andme files made public by the personal genome project. </span>
 <hr>
 <h1>Macro</h1>
     Identify list of PGS catalog entries and list of 23andme results you want to tabulate:
     <p>
-        List of PGS catalog entries: <textarea>1,2,3,4</textarea>
-        <br>List of 23andme files: <textarea>1,2,3,4</textarea>
+        List of PGS catalog entries:<br><textarea style="width:100%;color:lime;background-color:black;height:2em;font-size:medium">1,2,3,4</textarea>
+        <br>List of 23andme files: <br><textarea style="width:100%;color:lime;background-color:black;height:10em;font-size:small">
+./pgpZip/23andme_genome_Dan_Elton_v5_Full_20221117115029.zip
+./pgpZip/genome_Cajun_v5_Full_20231121192441.zip
+./pgpZip/genome_Christopher_Smith_v5_Full_20230926164611.zip
+./pgpZip/genome_Hannah_Goodman_v5_Full_20230823144607.zip    
+        </textarea>
         <br><button>Run macro tabulation</button>
+        <div id="progressTable">...</div>
     </p>
 <hr>
 <br><span style="font-size:small;">Scope/Limitations:</span><span style="font-size:small;color:navy;font-weight:normal">This calculator was devised as an implementation proof of concept. It has a number of important limitations for epidemiology research and it does not meet criteria for clinical use. The current tool uses pre-imputation genotype data and thus results in a low number of SNP matches. Most important, only the relative risk model <a href='https://www.nature.com/articles/nrg.2016.27#Sec5' target="_blank">(Box 1, eq 2)</a> is calculated, with no effort to determine absolute risk of disease. Finally, the risk calculation will only be attempted for PGS catalog entries reporting effects as beta values under "effect_weight".</span>
