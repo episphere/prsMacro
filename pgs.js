@@ -499,7 +499,8 @@ pgs.prepareMacro=function(){
             pgs.macro.pgsEntries=pgsEntriesTA.value.split(',').map(x=>parseInt(x))
         }
         if(location.hash.match(/andmeEntries=[^=&/n]+/)){ //pgs entries
-            pgs.macro.andmeEntries=location.hash.match(/andmeEntries=[^=&/n]+/)[0].split(/\s*\n\s*/)
+            pgs.macro.andmeEntries=location.hash.match(/andmeEntries=([^&]+)/)[1].split('/n')
+            //pgs.macro.andmeEntries=location.hash.match(/andmeEntries=[^=&/n]+/)[0].split(/\s*\n\s*/)
         }else{
             pgs.macro.andmeEntries=andmeEntriesTA.value.split(/\s*\n\s*/)
         }
@@ -507,6 +508,7 @@ pgs.prepareMacro=function(){
         pgs.macro.andmeEntries=pgs.macro.andmeEntries.filter(x=>x.length>3)
         //update hash
         location.hash=`pgsEntries=${pgs.macro.pgsEntries.join(',')}&andmeEntries=${pgs.macro.andmeEntries.join('/n')}`
+        
         pgs.runMacro()
     }
 }
