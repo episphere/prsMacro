@@ -1,4 +1,4 @@
-console.log('pgs.js loaded')
+console.log('pgs.js loaded');
 
 pgs = {date:Date()}
 
@@ -490,7 +490,25 @@ pgs.runMacro=function(){
     console.log(`run macro at ${Date()}`)
 }
 pgs.prepareMacro=function(){
-    runMacroTabulation.onclick=pgs.runMacro
+    pgs.macro={}
+    runMacroTabulation.onclick=function(){
+        // parameterize pgs entries
+        if(location.hash.match(/pgsEntries=[^=&]+/)){ //pgs entries
+            pgs.macro.pgsEntries=location.hash.match(/pgsEntries=[^=&]+/)[0].match(/[1-9,]+/)[0].split(',').map(x=>parseInt(x))
+        }else{
+            pgs.macro.pgsEntries=pgsEntriesTA.value.split(',').map(x=>parseInt(x))
+        }
+        if(location.hash.match(/andmeEntries=[^=&/n]+/)){ //pgs entries
+            pgs.macro.andmeEntries=location.hash.match(/andmeEntries=[^=&/n]+/)[0].split(/\s*\n\s*/)
+        }else{
+            pgs.macro.andmeEntries=andmeEntriesTA.value.split(/\s*\n\s*/)
+        }
+        // trailing blancs
+        pgs.macro.andmeEntries=pgs.macro.andmeEntries.filter(x=>x.length>3)
+        //update hash
+        location.hash=`pgsEntries=${pgs.macro.pgsEntries.join(',')}&andmeEntries=${pgs.macro.andmeEntries.join('/n')}`
+        pgs.runMacro()
+    }
 }
 pgs.prepareMacro()
 
