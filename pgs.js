@@ -494,19 +494,15 @@ pgs.prepareMacro=function(){
         pgsEntries:[],
         andmeEntries:[]
     }
-    try{
+    if(location.hash.match(/pgsEntries=([^&]+)/)){
         pgs.macro.pgsEntries=location.hash.match(/pgsEntries=([^&]+)/)[1].split(',').map(x=>parseInt(x))
-    }catch(err){
-        console.log(err)
     }
-    try{
+    if(pgs.macro.andmeEntries=location.hash.match(/andmeEntries=([^&]+)/)){
         pgs.macro.andmeEntries=location.hash.match(/andmeEntries=([^&]+)/)[1].split(',').map(x=>parseInt(x))
-    }catch(err){
-        console.log(err)
     }
-    
+
     function updateHash(){
-        if((pgs.macro.pgsEntries.length>0)&&(pgs.macro.andmeEntries.length>0)){
+        if((pgs.macro.pgsEntries>0)&&(pgs.macro.andmeEntries.length>0)){
             location.hash=`pgsEntries=${pgs.macro.pgsEntries.join(',')}&andmeEntries=${pgs.macro.andmeEntries.join(',')}`
             pgsEntriesTA.value=pgs.macro.pgsEntries.join(',')
             andmeEntriesTA.value=pgs.macro.andmeEntries.join(',')
