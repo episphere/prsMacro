@@ -485,9 +485,15 @@ pgs.getRsid = async(x = 'chr1:g.100880328A>T?fields=dbsnp.rsid')=>{
 pgs.dtFrame2Array=(fields,values)=>{
     // under development
 }
-
+http://localhost:8000/prsMacro/#pgsEntries=1,2,3,4,5,3,2&andmeEntries=./pgpZip/genome_Cajun_v5_Full_20231121192441.zip,./pgpZip/genome_Hannah_Goodman_v5_Full_20230823144607.zip
 pgs.runMacro=function(){
     console.log(`run macro at ${Date()}`)
+    // update variables and then update hash
+    // deblank, separate, de-tail
+    andmeEntriesTA.value=andmeEntriesTA.value.replace(/\%20/g,'')
+    andmeEntriesTA.value=andmeEntriesTA.value.replace(/\n/g,',')
+    andmeEntriesTA.value=andmeEntriesTA.value.replace(/,$/,'')
+    location.hash=`pgsEntries=${pgsEntriesTA.value}&andmeEntries=${andmeEntriesTA.value.replace(/\n/g,',')}`
 }
 pgs.prepareMacro=function(){
     pgs.macro={
@@ -495,26 +501,31 @@ pgs.prepareMacro=function(){
         andmeEntries:[]
     }
     if(location.hash.match(/pgsEntries=([^&]+)/)){
-        pgs.macro.pgsEntries=location.hash.match(/pgsEntries=([^&]+)/)[1].split(',').map(x=>parseInt(x))
+        pgs.macro.pgsEntries=pgsEntriesTA.value.match(/pgsEntries=([^&]+)/)[1].split(',').map(x=>parseInt(x))
     }
-    if(pgs.macro.andmeEntries=location.hash.match(/andmeEntries=([^&]+)/)){
-        pgs.macro.andmeEntries=location.hash.match(/andmeEntries=([^&]+)/)[1].split(',').map(x=>parseInt(x))
+    if(location.hash.match(/andmeEntries=([^&]{5,})/)){
+        pgs.macro.andmeEntries=andmeEntriesTA.value.match(/andmeEntries=([^&]{5,})/)[1].split(',')
     }
 
+    pgs.runMacro()
+
+    /*
     function updateHash(){
-        if((pgs.macro.pgsEntries>0)&&(pgs.macro.andmeEntries.length>0)){
-            location.hash=`pgsEntries=${pgs.macro.pgsEntries.join(',')}&andmeEntries=${pgs.macro.andmeEntries.join(',')}`
+        if((pgs.macro.pgsEntries.length>0)&&(pgs.macro.andmeEntries.length>0)){
             pgsEntriesTA.value=pgs.macro.pgsEntries.join(',')
-            andmeEntriesTA.value=pgs.macro.andmeEntries.join(',')
+            andmeEntriesTA.value=pgs.macro.andmeEntries.join('\n')
+            location.hash=`pgsEntries=${pgs.macro.pgsEntries.join(',')}&andmeEntries=${pgs.macro.andmeEntries.join(',')}`
         }
     }
     updateHash()
+    
     pgsEntriesTA.onkeyup=function(){
         pgs.macro.pgsEntries=pgsEntriesTA.value.split(',').filter(x=>x.length>0).map(x=>parseInt(x))
         updateHash()
     }
+    */
 
-    
+    /*
     runMacroTabulation.onclick=function(){
         // parameterize pgs entries
         if(location.hash.match(/pgsEntries=[^=&]+/)){ //pgs entries
@@ -529,9 +540,12 @@ pgs.prepareMacro=function(){
         
         pgs.runMacro()
     }
+    */
 }
-pgs.prepareMacro()
 
+runMacroTabulation.onclick=function(){
+    pgs.prepareMacro()
+}
 
 
 pgs.ini=()=>{ // act on context, such as search parameters. Not called automatically here.
