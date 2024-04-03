@@ -518,45 +518,23 @@ pgs.prepareMacro=function(){
         }
     }
     updateHash()
-    /*
-    pgsEntriesTA.onkeyup=function(){
-        pgs.macro.pgsEntries=pgsEntriesTA.value.split(',').filter(x=>x.length>0).map(x=>parseInt(x))
-        updateHash()
-    }
-    */
-
-    /*
-    runMacroTabulation.onclick=function(){
-        // parameterize pgs entries
-        if(location.hash.match(/pgsEntries=[^=&]+/)){ //pgs entries
-            pgs.macro.pgsEntries=location.hash.match(/pgsEntries=[^=&]+/)[0].match(/[1-9,]+/)[0].split(',').map(x=>parseInt(x))
-        }else{
-            pgs.macro.pgsEntries=pgsEntriesTA.value.split(',').map(x=>parseInt(x))
-        }
-        //update hash
-        location.hash=`pgsEntries=${pgs.macro.pgsEntries.join(',')}&andmeEntries=${pgs.macro.andmeEntries.join(',')}`
-        // update macro TAs
-        pgsEntriesTA.value=pgs.macro.pgsEntries.join(',')
-        
-        pgs.runMacro()
-    }
-    */
 }
 
 runMacroTabulation.onclick=async function(){
     pgs.prepareMacro() // update pgs.macro and location hash
-    progressTable.innerHTML='<h3>Progress<\h3>'
+    progressTable.innerHTML='<h3>Progress: <span style="font-size:small;font-style:arial">( [#](i,j) <span style="color:maroon">PGS<sub>i</sub></span> --> <span style="color:blue">23andme<sub>j</sub></span>] )</span></h3>'
+    let c=0
     for(const i in pgs.macro.pgsEntries){
         let pgi=pgs.macro.pgsEntries[i]
-        for(const j in pgs.macro.andmeEntries){
+        for(const j in pgs.macro.andmeEntries){ // <----- this is where the [i,j] cell is computed !
+            c++
             let mej=pgs.macro.andmeEntries[j]
             // progress
-            let msg = `(${i},${j}): ${pgi} --> ${mej}`
+            let msg = `(${i},${j}): <a style="color:maroon" href="#">${pgi}</a> --> <a href="${mej}" target="_blank">${mej}</a>}`
             console.log(msg)
-            progressTable.innerHTML+=`<li style="color:darkgreen;font-size:small">${msg}</li>`
+            progressTable.innerHTML+=`<li style="color:darkgreen;font-size:small"> [${c}] ${msg}</li>`
         }
     }
-    //debugger
 }
 
 
