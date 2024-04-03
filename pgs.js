@@ -501,15 +501,15 @@ pgs.prepareMacro=function(){
         andmeEntries:[]
     }
     if(location.hash.match(/pgsEntries=([^&]+)/)){
-        pgs.macro.pgsEntries=pgsEntriesTA.value.match(/pgsEntries=([^&]+)/)[1].split(',').map(x=>parseInt(x))
+        pgs.macro.pgsEntries=pgsEntriesTA.value.split(',').map(x=>parseInt(x))
     }
     if(location.hash.match(/andmeEntries=([^&]{5,})/)){
-        pgs.macro.andmeEntries=andmeEntriesTA.value.match(/andmeEntries=([^&]{5,})/)[1].split(',')
+        pgs.macro.andmeEntries=andmeEntriesTA.value.replace(/ /g,'').split(/[,\n]/g).filter(x=>(x.length>0))
     }
 
     pgs.runMacro()
 
-    /*
+    
     function updateHash(){
         if((pgs.macro.pgsEntries.length>0)&&(pgs.macro.andmeEntries.length>0)){
             pgsEntriesTA.value=pgs.macro.pgsEntries.join(',')
@@ -518,7 +518,7 @@ pgs.prepareMacro=function(){
         }
     }
     updateHash()
-    
+    /*
     pgsEntriesTA.onkeyup=function(){
         pgs.macro.pgsEntries=pgsEntriesTA.value.split(',').filter(x=>x.length>0).map(x=>parseInt(x))
         updateHash()
@@ -543,8 +543,20 @@ pgs.prepareMacro=function(){
     */
 }
 
-runMacroTabulation.onclick=function(){
-    pgs.prepareMacro()
+runMacroTabulation.onclick=async function(){
+    pgs.prepareMacro() // update pgs.macro and location hash
+    progressTable.innerHTML='<h3>Progress<\h3>'
+    for(const i in pgs.macro.pgsEntries){
+        let pgi=pgs.macro.pgsEntries[i]
+        for(const j in pgs.macro.andmeEntries){
+            let mej=pgs.macro.andmeEntries[j]
+            // progress
+            let msg = `(${i},${j}): ${pgi} --> ${mej}`
+            console.log(msg)
+            progressTable.innerHTML+=`<li style="color:darkgreen;font-size:small">${msg}</li>`
+        }
+    }
+    //debugger
 }
 
 
